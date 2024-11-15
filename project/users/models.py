@@ -14,9 +14,6 @@ class User(django.contrib.auth.models.AbstractUser):
         null=True, blank=True, verbose_name='дата рождения'
     )
 
-    identity_confirmed = django.db.models.BooleanField(
-        default=False, verbose_name='подтверждение личности'
-    )
 
     def __str__(self):
         return f'Пользователь {self.pk}'

@@ -61,25 +61,3 @@ def validate_activation_link(value, **kwargs):
 
     user = users.models.User.objects.get(username=username)
     return user
-
-
-def generate_normalize_email(email):
-    if '@' in email:
-        email = email.lower()
-        name, domain = email.split('@')
-
-        name = name.split('+')[0]
-
-        if domain == 'ya.ru':
-            domain = 'yandex.ru'
-
-        if domain == 'gmail.com':
-            name = name.replace('.', '')
-
-        if domain == 'yandex.ru':
-            name = name.replace('.', '-')
-
-        return f'{name}@{domain}'
-
-    else:
-        return email

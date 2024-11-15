@@ -89,7 +89,6 @@ class ProfileView(
         user_form = users.forms.UserForm(instance=user)
 
         context['user_form'] = user_form
-        context['identity_confirmed'] = user.identity_confirmed
         return context
 
     def post(self, request):

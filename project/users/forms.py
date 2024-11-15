@@ -30,16 +30,6 @@ class SignUpForm(
 
         return username
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-
-        normalized_email = users.services.generate_normalize_email(email)
-
-        if users.models.User.objects.filter(email=normalized_email).exists():
-            raise django.forms.ValidationError('Такая почта уже существует')
-
-        return normalized_email
-
     class Meta:
         model = users.models.User
         fields = ('username', 'email', 'password1', 'password2')
