@@ -1,0 +1,17 @@
+{% extends 'base_head.html' %}
+{% load static %}
+
+
+{% block body %}
+
+{% include "includes/header.html" %}
+
+<main class="main">
+  <div class="container content">
+    {% block content %}Content пустой — что-то не так{% endblock %}
+  </div>
+</main>
+
+{% comment %}{% include "includes/footer.html" %} {% endcomment %}
+
+{% endblock body %}

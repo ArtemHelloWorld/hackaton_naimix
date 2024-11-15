@@ -1,106 +1,103 @@
-import rest_framework.exceptions
-import rest_framework.generics
-import rest_framework.permissions
-import rest_framework.response
-import rest_framework.serializers
-import rest_framework.status
-import rest_framework.views
-import rest_framework.viewsets
-from drf_yasg.utils import swagger_auto_schema
-from rest_framework.decorators import api_view
+import django.conf
+import django.contrib.auth.decorators
+import django.contrib.auth.forms
+import django.contrib.auth.mixins
+import django.contrib.auth.models
+import django.shortcuts
+import django.views.generic
 
+import users.forms
 import users.models
-import users.serializers
+import users.services
 
 
-class UserCreateAPIView(rest_framework.generics.CreateAPIView):
-    permission_classes = [rest_framework.permissions.AllowAny]
-    serializer_class = users.serializers.UserSerializer
+class SignupView(django.views.generic.FormView):
+    template_name = 'users/signup/signup.html'
+    form_class = users.forms.SignUpForm
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-        return rest_framework.response.Response(serializer.data)
+    def form_valid(self, form):
+        user = form.save(commit=False)
+
+        if django.conf.settings.ACTIVATE_USERS:
+            user.is_active = True
+            user.save()
+
+            return django.shortcuts.redirect('users:login')
+        else:
+            user.is_active = False
+            user.save()
+
+            users.services.send_email_with_activation_link(self.request, user)
+
+            return django.shortcuts.redirect('users:signup_complete')
 
 
-class UsersSearchListApiView(rest_framework.generics.ListAPIView):
-    serializer_class = users.serializers.ProfileSerializer
+class SignupCompleteView(django.views.generic.TemplateView):
+    template_name = 'users/signup/signup_complete.html'
 
-    def get_queryset(self):
-        return users.models.User.objects.filter(
-            username__icontains=self.kwargs['username_filter']
+
+class SignupActivateView(django.views.generic.TemplateView):
+    template_name = 'users/signup/activation_done.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = users.services.validate_activation_link(
+            kwargs.get('activation_code'), hours=12
         )
 
-class UsersListApiView(rest_framework.generics.ListAPIView):
-    serializer_class = users.serializers.ProfileSerializer
+        if user and not user.is_active:
+            user.is_active = True
+            user.save()
 
-    def get_queryset(self):
-        return users.models.User.objects.all()
+            context['message'] = 'Вы успешно зерегистрировались'
+
+        else:
+            context['message'] = 'Неверная ссылка или действие ссылки истекло'
 
 
-class ProfileRetrieveUpdateAPIView(
-    rest_framework.generics.RetrieveUpdateAPIView
+class ReactivationView(django.views.generic.TemplateView):
+    template_name = 'users/signup/activation_done.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = users.services.validate_activation_link(
+            kwargs.get('activation_code'), days=7
+        )
+
+        if user and not user.is_active:
+            user.is_active = True
+            user.save()
+
+            context['message'] = 'Вы успешно восставновили аккаунт'
+
+        else:
+            context['message'] = 'Неверная ссылка или действие ссылки истекло'
+
+
+class ProfileView(
+    django.contrib.auth.mixins.LoginRequiredMixin,
+    django.views.generic.TemplateView,
 ):
-    queryset = users.models.User.objects.all()
-    lookup_url_kwarg = 'user_id'
-    lookup_field = 'id'
-    serializer_class = users.serializers.ProfileSerializer
+    template_name = 'users/profile/profile.html'
 
-    def perform_update(self, serializer):
-        if serializer.instance == self.request.user:
-            serializer.save()
-        else:
-            raise rest_framework.exceptions.PermissionDenied(
-                'You can only update your own profile.'
-            )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-class SkillViewSet(rest_framework.viewsets.ModelViewSet):
-    queryset = users.models.Skill.objects.all()
-    serializer_class = users.serializers.SkillSerializer
-        
-class AchievementViewSet(rest_framework.viewsets.ModelViewSet):
-    queryset = users.models.Achievement.objects.all()
-    serializer_class = users.serializers.AchievementSerializer
+        user = self.request.user
+        user_form = users.forms.UserForm(instance=user)
 
+        context['user_form'] = user_form
+        context['identity_confirmed'] = user.identity_confirmed
+        return context
 
-class AwardingAchievements(rest_framework.views.APIView):
-    def process_request(self, request):
-        serialized_data = users.serializers.AchievementGivingSerializer(
-            data=request.data
-        )
-        if serialized_data.is_valid():
-            data = serialized_data.validated_data
-            achievements = users.models.Achievement.objects.filter(
-                id__in=data.get('achievements', [])
-            )
-            users_objs = users.models.User.objects.filter(
-                id__in=data.get('users', [])
-            )
-            return achievements, users_objs
-        else:
-            raise rest_framework.exceptions.ValidationError('Wrong data format')
-    
-    def get_response(self, users_objs):
-        users_data = users.serializers.ProfileSerializer(
-            users_objs, many=True
-        ).data
-        return rest_framework.response.Response(users_data)
-        
-    @swagger_auto_schema(
-        request_body=users.serializers.AchievementGivingSerializer,
-    )
     def post(self, request):
-        achievements, users_objs = self.process_request(request)
-        for user in users_objs:
-            user.achievements.add(*achievements)
-        return self.get_response(users_objs)
-    
-    @swagger_auto_schema(
-        request_body=users.serializers.AchievementGivingSerializer,
-    )
-    def delete(self, request):
-        achievements, users_objs = self.process_request(request)
-        for user in users_objs:
-            user.achievements.remove(*achievements)
-        return self.get_response(users_objs)
+        user = request.user
+        user_form = users.forms.UserForm(
+            request.POST, request.FILES, instance=user
+        )
+
+        if user_form.is_valid():
+            user_form.save()
+        return django.shortcuts.redirect('users:profile')
