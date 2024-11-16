@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-  {% include "includes/form.html" with form=form btn_text=btn_text %}
-</body>
-</html>
+{% extends 'base_head.html' %}
+
+{% block body %}
+  <h1 class="mb-5 text-center">Создание</h1>
+  {% include "includes/form.html" with form=form btn_text="Создать" %}
+{% endblock %}

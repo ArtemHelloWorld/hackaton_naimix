@@ -6,8 +6,8 @@ from django.utils import timezone
 
 class Employee(models.Model):
     class StatusChoices(models.TextChoices):
-        CANDIDATE = ("CA", "кандидат")
-        WORKER = ("WR", "сотрудник")
+        CANDIDATE = ("CA", "Кандидат")
+        WORKER = ("WR", "Сотрудник")
 
     is_candidate = models.CharField(
         max_length=2,
@@ -18,41 +18,52 @@ class Employee(models.Model):
     first_name = models.CharField(
         max_length=50,
         help_text="Имя",
+        verbose_name="Иван",
     )
     last_name = models.CharField(
         max_length=50,
         help_text="Фамилия",
+        verbose_name="Иванов",
     )
     location = models.CharField(
         max_length=50,
-        help_text="Город/населенный пункт"
+        help_text="Город/населенный пункт",
+        verbose_name='Москва'
     )
     email = models.EmailField(
         max_length=100,
         help_text="Электронный адрес",
+        verbose_name='mail@example.com'
     )
     phone = models.CharField(
         max_length=15,
         help_text="Номер телефона",
+        verbose_name='+7 999 999 99 99'
     )
     general_skills = models.TextField(
         help_text="Основные навыки",
+        verbose_name='Укажите основные навыки'
     )
     birthday = models.DateField(
         help_text="Дата рождения",
+        verbose_name="Дата рождения",
     )
     zodiac_sign = models.CharField(
         max_length=15,
         help_text="Знак зодиака",
+        verbose_name="Знак зодиака",
     )
     age = models.IntegerField(
         help_text="Возраст",
+        verbose_name="Возраст",
     )
     significator = models.IntegerField(
         help_text="Сигнификатор",
+        verbose_name="Сигнификатор",
     )
     court_card = models.IntegerField(
         help_text="Придворная карта",
+        verbose_name="Придворная карта",
     )
 
     def save(self, *args, **kwargs):
