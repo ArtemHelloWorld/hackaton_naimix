@@ -1,0 +1,19 @@
+{% load static %}
+
+<div class="col-md-4 p-2">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3 class="card-title mb-3">{{ user.first_name }} {{ user.last_name }}</h5>
+            <p class="card-text mb-1"><strong>Локация:</strong> {{ user.location }}</p>
+            <p class="card-text mb-1"><strong>Email:</strong> {{ user.email }}</p>
+            <p class="card-text mb-1"><strong>Телефон:</strong> {{ user.phone }}</p>
+            <p class="card-text mb-1"><strong>Навыки:</strong> {{ user.general_skills }}</p>
+            <p class="card-text mb-1"><strong>Знак Зодиака:</strong> {{ user.zodiac_sign }}</p>
+            <p class="card-text mb-1"><strong>Возраст:</strong> {{ user.age }}</p>
+            <form method="post" action="{% url 'workers:delete_candidate' user.id %}">
+              {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </form>
+        </div>
+    </div>
+</div>

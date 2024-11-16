@@ -106,7 +106,7 @@ class Employee(models.Model):
         self.significator = total
 
         def court_card_f(age, sign):
-            with open('../cards.json', 'r') as js_file:
+            with open('../cards.json', 'r', encoding='utf-8') as js_file:
                 cards = json.load(js_file)
                 for card in cards:
                     if (card["type"] == "Придворная карта"

@@ -1,36 +1,27 @@
 {% load static %}
-{% load i18n %}
 
 <header class="p-3 bg-black">
 
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <a href="{% url 'home:home' %}" class="d-flex align-items-center me-3 text-white text-decoration-none">
-        <img src="{% static 'img/logo-light.svg' %}" width="150">
-      </a>
-
       {% with request.resolver_match.view_name as view_name %}
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="{% url 'home:home' %}" class="nav-link px-2 {% if view_name == 'home:home' %} text-secondary {% else %} text-white {% endif %}">{% trans "На главную" %}</a></li>
-        <li><a href="{% url 'dishes:dishes_search' %}" class="nav-link px-2 {% if view_name == 'dishes:dishes_search' %} text-secondary {% else %} text-white {% endif %}">{% trans "Найти блюдо" %}</a></li>
-        {% if user.is_authenticated %}
-          <li><a href="{% url 'dishes:dish_new' %}" class="nav-link px-2 {% if view_name == 'dishes:dish_new' %} text-secondary {% else %} text-white {% endif %}">{% trans "Добавить блюдо" %}</a></li>
-        {% endif %}
-        <li><a href="{% url 'feedback:feedback' %}" class="nav-link px-2 {% if view_name == 'feedback:feedback' %} text-secondary {% else %} text-white {% endif %}">{% trans "Оставить фидбек" %}</a></li>
+        <li><a href="{% url 'workers:employees' %}" class="nav-link px-2 {% if view_name == 'workers:employees' %} text-secondary {% else %} text-white {% endif %}">Сотрудники</a></li>
+        <li><a href="{% url 'workers:candidates' %}" class="nav-link px-2 {% if view_name == 'workers:candidates' %} text-secondary {% else %} text-white {% endif %}">Кандидаты</a></li>
       </ul>
       {% endwith %}
 
       <div class="text-end">
         {% if user.is_authenticated %}
           {% if user.is_staff %}
-            <a href="{% url 'admin:index' %}" type="button" class="btn btn-outline-light me-2">{% trans "Панель администратора" %}</a>
+            <a href="{% url 'admin:index' %}" type="button" class="btn btn-outline-light me-2">Панель администратора</a>
           {% endif %}
-            <a href="{% url 'users:logout' %}" type="button" class="btn btn-outline-light me-2">{% trans "Выйти" %}</a>
-            <a href="{% url 'users:profile' %}" type="button" class="btn btn-outline-light me-2">{% trans "Мой профиль" %}</a>
+            <a href="{% url 'users:logout' %}" type="button" class="btn btn-outline-light me-2">Выйти</a>
+            <a href="{% url 'users:profile' %}" type="button" class="btn btn-outline-light me-2">Мой профиль</a>
         {% else %}
-          <a href="{% url 'users:login' %}" type="button" class="btn btn-outline-light me-2">{% trans "Войти" %}</a>
-          <a href="{% url 'users:signup' %}" type="button" class="btn btn-outline-light me-2">{% trans "Зарегистрироваться" %}</a>
+          <a href="{% url 'users:login' %}" type="button" class="btn btn-outline-light me-2">Войти</a>
+          <a href="{% url 'users:signup' %}" type="button" class="btn btn-outline-light me-2">Зарегистрироваться</a>
         {% endif %}
       </div>
     </div>
