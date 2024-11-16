@@ -4,7 +4,7 @@ import django.db.models
 
 class User(django.contrib.auth.models.AbstractUser):
     image = django.db.models.ImageField(
-        upload_to='item/main/%Y/%m/%d',
+        upload_to='profile_image/%Y/%m/%d',
         null=True,
         blank=True,
         verbose_name='аватарка',
