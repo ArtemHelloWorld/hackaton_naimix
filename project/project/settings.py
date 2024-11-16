@@ -12,7 +12,7 @@ DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1')
 
 ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
-    '127.0.0.1',
+    '127.0.0.1,artemk19.beget.tech',
 ).split(',')
 
 INSTALLED_APPS = [
@@ -60,7 +60,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': os.getenv('SQL_NAME', 'db.sqlite3'),
+        'NAME': os.getenv('SQL_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
         'USER': os.getenv('SQL_USER', 'user'),
         'PASSWORD': os.getenv('SQL_PASSWORD', 'password'),
         'HOST': os.getenv('SQL_HOST', 'localhost'),
@@ -92,7 +92,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATIC_ROOT = 'static-root/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static-root/')
 STATICFILES_DIRS = [
     BASE_DIR / 'static_dev',
 ]

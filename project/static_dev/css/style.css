@@ -1,5 +1,47 @@
 .gradient-custom {
     background: #6a11cb;
-    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+    background: -webkit-linear-gradient(to right, rgba(12, 101, 101, 1), rgba(21, 171, 171, 1));
+    background: linear-gradient(to right, rgba(12, 101, 101, 1), rgb(21, 171, 171))
+}
+.btn-primary {
+    background: #f15330 !important;
+    border: 1px solid;
+    border-color: #f15330 !important;
+}
+.btn-primary:hover {
+    background: #000000 !important;
+    border: 1px solid !important;
+    border-color: #f15330 !important;
+}
+.btn-outline-light {
+    border-color: #f15330 !important;
+    color: black;
+}
+.btn-outline-light:hover {
+    border-color: #000000 !important;
+    background-color: #000000;
+    color: white;
+}
+.bg-grey {
+    background: rgb(192, 192, 192);
+}
+html {
+ height: 100%;
+ font-size: 1rem;
+}
+body {
+  min-height: 100%;
+}
+.text-black {
+    font-weight: 600 !important;
+    color: rgba(12, 101, 101, 1) !important;
+}
+.btn-success {
+    background: rgba(12, 101, 101, 1);
+    border: 1px solid;
+    border-color: rgba(12, 101, 101, 1) !important;
+}
+.btn-success:hover {
+    background: rgb(21, 171, 171);
+    border-color: rgb(21, 171, 171) !important;
 }

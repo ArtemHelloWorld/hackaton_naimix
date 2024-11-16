@@ -1,14 +1,14 @@
 {% load static %}
 
-<header class="p-3 bg-black">
+<header class="p-3 border-bottom">
 
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       {% with request.resolver_match.view_name as view_name %}
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="{% url 'workers:employees' %}" class="nav-link px-2 {% if view_name == 'workers:employees' %} text-secondary {% else %} text-white {% endif %}">Сотрудники</a></li>
-        <li><a href="{% url 'workers:candidates' %}" class="nav-link px-2 {% if view_name == 'workers:candidates' %} text-secondary {% else %} text-white {% endif %}">Кандидаты</a></li>
+        <li><a href="{% url 'workers:employees' %}" class="nav-link px-2 {% if view_name == 'workers:employees' %} text-secondary {% else %} text-black {% endif %}">Сотрудники</a></li>
+        <li><a href="{% url 'workers:candidates' %}" class="nav-link px-2 {% if view_name == 'workers:candidates' %} text-secondary {% else %} text-black {% endif %}">Кандидаты</a></li>
       </ul>
       {% endwith %}
 
