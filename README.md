@@ -94,6 +94,8 @@ get_random_secret_key()
 
 ### Выполните миграции для создания таблиц в БД:
 
+> Актуальная схема базы данных по ссылке `https://dbdiagram.io/d/67387988e9daa85acaa89454`
+
 ```
 python3 manage.py migrate
 ```
