@@ -6,7 +6,6 @@ dotenv.load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-w30sdst!pi!e$n00rf4iu@')
 
 DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1')
@@ -16,7 +15,6 @@ ALLOWED_HOSTS = os.getenv(
     '127.0.0.1',
 ).split(',')
 
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'workers.apps.WorkersConfig',
 
 ]
 
@@ -58,8 +57,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
-
-
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.sqlite3'),
@@ -86,8 +83,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -95,7 +90,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 STATIC_URL = 'static/'
 STATIC_ROOT = 'static-root/'
@@ -108,4 +102,3 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
-
