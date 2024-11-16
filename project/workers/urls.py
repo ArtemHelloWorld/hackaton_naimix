@@ -23,5 +23,9 @@ urlpatterns = [
         'delete_candidate/<int:candidate_id>/',
         workers.views.delete_candidate,
         name='delete_candidate'),
-
+    django.urls.path(
+        'compatibility/',
+        workers.views.compatibility,
+        name="compatibility"
+    ),
 ]

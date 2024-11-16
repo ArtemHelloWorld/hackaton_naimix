@@ -35,3 +35,9 @@ def delete_candidate(request, candidate_id):
     candidate = get_object_or_404(Employee, id=candidate_id)
     candidate.delete()
     return redirect('workers:candidates')
+
+
+# страничка с выбором - смотреть совместимость между 2мя или командой
+def compatibility(request):
+    pass
+

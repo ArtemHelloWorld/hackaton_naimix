@@ -112,7 +112,6 @@ class Employee(models.Model):
                     if (card["type"] == "Придворная карта"
                             and sign in card["zodiac_sign"]
                             and card["age"][0] <= age <= card["age"][1]):
-                        print(card)
                         return card["card_id"]
                 return 0
 
