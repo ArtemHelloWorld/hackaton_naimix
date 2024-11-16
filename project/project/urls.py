@@ -3,6 +3,7 @@ import django.urls
 import django.conf.urls.static
 
 urlpatterns = [
+    django.urls.path('', django.urls.include('django.contrib.auth.urls')),
     django.urls.path('admin/', admin.site.urls),
     django.urls.path('users/', django.urls.include('users.urls')),
     django.urls.path('workers/', django.urls.include('workers.urls')),

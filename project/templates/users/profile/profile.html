@@ -1,21 +1,61 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load thumbnail %}
-{% load i18n %}
+{% extends 'base_head.html' %}
 
 
-{% block title %}{% trans "Мой профиль" %}{% endblock %}
+{% block title %}Личный кабинет{% endblock %}
 
-{% block content %}
-  <h1>{% trans "Мой профиль" %}
-    {% if identity_confirmed %}
-        <img src="{% static 'img/identity-confirmed-badge-50.jpg' %}" class="img-fluid">
-    {% endif %}
-  </h1>
-  <div class="container pt-4">
-    <div class="row">
-      {% trans "Сохранить изменения" as btn_text %}
-      {% include "includes/form.html" with form=user_form btn_text=btn_text %}
+{% block body %}
+  <h1>Личный кабинет</h1>
+  <div class="container mt-5 p-0">
+    <div class="card container">
+        <div class="row" style="max-width: 100%">
+            <div class="col-md-2 d-flex align-items-center justify-content-center py-2" >
+              {% if user.image %}
+                <img src="{{ user.image.url }}" style="max-width: 100%">
+              {% else %}
+                <img src="https://bashgmu.ru/upload/iblock/c58/2dadifr3cdvo3ha4yu0e9gpbe7oyr2tp.jpg"  style="max-width: 100%">
+              {% endif %}
+              </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h5 class="card-title">{% if user.last_name or user.last_name %} {% if user.last_name %}{{ user.first_name }}{% endif %} {% if user.first_name %}{{ user.last_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</h5>
+                    <h6 class="card-subtitle mb-3 text-muted">HR-менеджер</h6>
+                    <p class="card-text"> {{ user.email }} 
+                    {% if user.birthday %}<br>{{ user.birthday }} {% endif %}</p> 
+                    <a href="{% url 'users:profile_change' %}" class="btn btn-primary mb-2">Редактировать профиль</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+    <div class="container border-bottom mt-5">
+      <h3>Вакансии</h3>
+      <div class="row">
+        <div class="col">
+          <a href="{% url 'workers:employees' %}" class="btn btn-primary mb-2 w-100">Мои кандидаты</a>
+        </div>
+        <div class="col">
+          <a href="#" class="btn btn-primary mb-2 w-100">Узнать совеместимость</a>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+      </div>
+    </div>
+    <div class="container border-bottom mt-5">
+      <h3>Персонал</h3>
+      <div class="row">
+        <div class="col">
+          <a href="{% url 'workers:questionnaire' %}" class="btn btn-primary mb-2 w-100" >Управлять персоналом</a>
+        </div>
+        <div class="col">
+          <a href="{% url 'workers:candidates' %}" class="btn btn-primary mb-2 w-100">Мои сотрудники</a>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+      </div>
+    </div>
+</div>
+  
 {% endblock %}

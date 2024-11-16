@@ -52,6 +52,7 @@ urlpatterns = [
         'password_reset/',
         django.contrib.auth.views.PasswordResetView.as_view(
             template_name='users/password_reset/password_reset.html',
+            success_url = django.urls.reverse_lazy("users:password_reset_done"),
             form_class=type(
                 'BootstrapPasswordResetForm',
                 (
@@ -115,5 +116,8 @@ urlpatterns = [
     ),
     django.urls.path(
         'profile/', users.views.ProfileView.as_view(), name='profile'
+    ),
+    django.urls.path(
+        'profile_change/', users.views.ProfileChangeView.as_view(), name='profile_change'
     ),
 ]

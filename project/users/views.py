@@ -82,6 +82,13 @@ class ProfileView(
 ):
     template_name = 'users/profile/profile.html'
 
+
+class ProfileChangeView(
+    django.contrib.auth.mixins.LoginRequiredMixin,
+    django.views.generic.TemplateView,
+):
+    template_name = 'users/profile/profile_change.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
