@@ -5,19 +5,25 @@
 }
 .btn-primary {
     background: #f15330 !important;
-    border: 1px solid;
-    border-color: #f15330 !important;
+    border: none;
 }
 .btn-primary:hover {
     background: #000000 !important;
-    border: 1px solid !important;
-    border-color: #f15330 !important;
 }
 .btn-outline-light {
     border-color: #f15330 !important;
     color: black;
 }
 .btn-outline-light:hover {
+    border-color: #000000 !important;
+    background-color: #000000;
+    color: white;
+}
+.btn-outline-dark {
+    border-color: rgba(12, 101, 101, 1) !important;
+    color: black;
+}
+.btn-outline-dark:hover {
     border-color: #000000 !important;
     background-color: #000000;
     color: white;
@@ -32,9 +38,24 @@ html {
 body {
   min-height: 100%;
 }
-.text-black {
+.text-main {
     font-weight: 600 !important;
-    color: rgba(12, 101, 101, 1) !important;
+    color: #f15330 !important;
+}
+.border-bottom-main {
+    border-bottom: solid;
+    border-color: #f15330;
+}
+.text-main:hover {
+    font-weight: 600 !important;
+    color: #fd8064 !important;
+}
+.border-bottom-main:hover {
+    border-bottom: solid;
+    border-color: #fd8064;
+}
+.text-main-onhover:hover {
+    color: #fd8064 !important;
 }
 .btn-success {
     background: rgba(12, 101, 101, 1);
@@ -44,4 +65,16 @@ body {
 .btn-success:hover {
     background: rgb(21, 171, 171);
     border-color: rgb(21, 171, 171) !important;
+}
+.btn-danger {
+    background: rgba(255, 255, 255, 0);
+    border: 1px solid;
+    border-color: #f15330 !important;
+    color: black;
+}
+.btn-danger:hover {
+    background: #f15330;
+}
+.h-95 {
+    min-height: 95vh;
 }
